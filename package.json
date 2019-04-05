@@ -1,0 +1,29 @@
+{
+  "name": "mysql-amazon",
+  "version": "1.0.0",
+  "description": "Cli app that is an Amazon-esk store front based on MySQL and Inquirer.",
+  "main": "bamazonCustomer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kinla/MySQL-Amazon.git"
+  },
+  "keywords": [
+    "MySQL",
+    "Cli",
+    "Amazon",
+    "Inquirer"
+  ],
+  "author": "Sharon Chien",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Kinla/MySQL-Amazon/issues"
+  },
+  "homepage": "https://github.com/Kinla/MySQL-Amazon#readme",
+  "dependencies": {
+    "inquirer": "^6.2.2",
+    "mysql": "^2.16.0"
+  }
+}
