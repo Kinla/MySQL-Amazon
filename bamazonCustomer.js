@@ -90,7 +90,7 @@ const customer = {
                     customer.menu();
 
                 } else {
-                    let newStock = stock - orderQuantity
+                    let newStock = parseInt(stock) - parseInt(orderQuantity)
                     customer.updateStock(id, newStock)
                     customer.bill(id, orderQuantity)
                 }
@@ -120,7 +120,7 @@ const customer = {
             }],
             function(err, res){
                 if (err) throw err
-                let bill = res[0].price * orderQuantity
+                let bill = parseFloat(res[0].price) * parseInt(orderQuantity)
                 console.log(`Your total is $${bill.toFixed(2)}.`)
                 customer.menu();
             }
