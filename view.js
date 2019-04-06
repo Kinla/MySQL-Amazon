@@ -1,7 +1,7 @@
 const inquirer = require("inquirer")
 const model = require("./model.js")
 
-let view = {
+const view = {
     showCustomer: (res) =>{
         console.log(`|--ID--|-------------Product-------------|-Price-|`)
         res.forEach(el => {
@@ -22,7 +22,8 @@ let view = {
                 name: "quantity"
             }
         ]).then(answers => {
-            model.showStock(answers.id); // this is IDed outside of view but not inside...???
+            model.showStock(answers.id); 
+            // this is IDed outside of view but not inside...???
         })
     }
 }

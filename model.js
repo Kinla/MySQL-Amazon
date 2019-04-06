@@ -1,9 +1,7 @@
 const connection = require("./connection.js")
 const view = require("./view.js")
 
-//show entire product table
-
-let model = {
+const model = {
     showAll: () => {
         connection.query(
             "SELECT * FROM products",
@@ -21,7 +19,8 @@ let model = {
             },
             function(err, res){
                 if (err) throw err
-                console.log(res[0].stock_quantity)
+                let stock = res[0].stock_quantity
+                console.log(`Current stock: ${stock}`)
             })
     }
 
