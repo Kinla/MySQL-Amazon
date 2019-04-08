@@ -1,13 +1,15 @@
 const inquirer = require("inquirer")
-const model = require("./model.js")
 
 const view = {
     showCustomer: (res) =>{
+        console.log("view " + res)
         console.log(`|--ID--|-------------Product-------------|-Price-|`)
         res.forEach(el => {
             console.log(`| ${el.item_id} |  ${el.product_name}  |  $${el.price}  |`)
         });
-        view.placeOrder();
+
+        
+        //view.placeOrder();
     },
     placeOrder: () =>{
         inquirer.prompt([

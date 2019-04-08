@@ -61,13 +61,6 @@ const customer = {
             )
 
         })
-
-
-
-
-
-
-
     },
     order: () => {
         inquirer.prompt([

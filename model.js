@@ -7,7 +7,8 @@ const model = {
             "SELECT * FROM products",
             function(err, res){
                 if (err) throw err
-                view.showCustomer(res)
+                //view.showCustomer(res)
+                return res
             }
         )
     },
