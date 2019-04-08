@@ -26,11 +26,34 @@ VALUES
     ("Cottonelle Ultra ComfortCare Toilet Paper","Home", 12.97, 900),
     ("Digital Bathroom Scale","Home", 23.99, 481)
 
+
 CREATE TABLE departments (
   department_id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
   department_name VARCHAR(100) NOT NULL,
   over_head_costs INTEGER(30) NOT NULL
 );
 
+INSERT INTO departments (department_name, over_head_costs)
+VALUES
+  ("Electronics & Accessories", 10000),
+  ("Grocery & Gourmet Food", 9000),
+  ("Home", 20000)
+
+
 ALTER TABLE products
 ADD product_sales DECIMAL(30,2) DEFAULT 0.00
+
+-- this totals allt he product sales by department and gives an allias on the fly
+SELECT department_name, SUM(product_sales) `total sales`
+FROM products
+GROUP BY department_name
+
+-- this will make the new table as required via bamazonsupvervisor.js
+SELECT department_id, new.department_name, over_head_costs, product_sales, product_sales-over_head_costs AS total_profit 
+FROM(
+SELECT department_name, SUM(product_sales) product_sales
+FROM products
+GROUP BY department_name
+)AS new
+RIGHT JOIN departments
+ON new.department_name = departments.department_name

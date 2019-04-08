@@ -36,3 +36,75 @@
 
    * **HINT**: There may be an NPM package that can log the table to the console. What's is it? Good question :)
 */
+
+const connection = require("./connection.js")
+const inquirer = require("inquirer")
+
+const supervisor = {
+    menu: () => {
+        inquirer.prompt([
+            {
+                type: "list",
+                message: "What would you like to?",
+                choices: ["View Product Sales by Department", "Create New Department", "EXIT"],
+                name: "choice"
+            }
+        ]).then( answers => {
+            switch (answers.choice) {
+                case "View Product Sales by Department":
+                    supervisor.viewSales();
+                    break;
+                case "Create New Department":
+                    supervisor.createDept();
+                    break;
+                case "EXIT":
+                    process.exit();
+                    break;
+            
+                default:
+                    break;
+            }
+            
+        })
+    },
+    viewSales: () => {
+        connection.query(
+            "",
+            function(err, res){
+                if (err) throw err
+                console.log(res)
+            }
+        )
+    },
+    createDept: () => {
+        inquirer.prompt([
+            {
+                type: "input",
+                message: "What department would you like to create?",
+                name: "name"
+            },
+            {
+                type: "input",
+                message: "Whta is the over head cost of running this department?",
+                name: "cost"
+            }
+        ]).then(answers => {
+            let name = answers.name
+            let cost = answers.cost
+            connection.query(
+                "INSERT INTO departments SET ?",
+                [{
+                    department_name: name,
+                    over_head_costs: cost
+                }],
+                function(err, res){
+                    if (err) throw err
+                    console.log(`${res.affectedRows} has been added to the store.`)
+                    supervisor.menu();
+                }
+            )
+        })
+    },
+}
+
+supervisor.menu();
