@@ -12,7 +12,7 @@ CREATE TABLE products (
   stock_quantity INT
 );
 
-INSERT INTO products (product_name, department_name, price, stock_quantity)
+INSERT INTO products (product_name, department_name, price, stock_quantity, )
 VALUES
     ("SanDisk Ultra 128GB microSD", "Electronics & Accessories", 19.00, 8),
     ("Anker SoundBuds Slim Bluetooth Earbuds", "Electronics & Accessories", 32.99, 50),
@@ -25,3 +25,12 @@ VALUES
     ("black+Decker Toaster Oven","Home", 34.96, 64),
     ("Cottonelle Ultra ComfortCare Toilet Paper","Home", 12.97, 900),
     ("Digital Bathroom Scale","Home", 23.99, 481)
+
+CREATE TABLE departments (
+  department_id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  department_name VARCHAR(100) NOT NULL,
+  over_head_costs INTEGER(30) NOT NULL
+);
+
+ALTER TABLE products
+ADD product_sales DECIMAL(30,2) DEFAULT 0.00

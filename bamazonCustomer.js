@@ -122,9 +122,35 @@ const customer = {
                 if (err) throw err
                 let bill = parseFloat(res[0].price) * parseInt(orderQuantity)
                 console.log(`Your total is $${bill.toFixed(2)}.`)
-                customer.menu();
+                customer.recordSale(id, bill)
             }
         )
+    },
+    recordSale: (id, sale) => {
+        connection.query(
+            "SELECT product_sales FROM products WHERE ?",
+            [{
+                item_id: id
+            }],
+            function(err, res){
+                if (err) throw err
+                let salesNum = parseFloat(res[0].product_sales)
+                let updatedSalesNum = sale + salesNum
+                connection.query(
+                    "UPDATE products SET ? WHERE ?",
+                    [{
+                        product_sales: updatedSalesNum
+                    },{
+                        item_id: id
+                    }],
+                    function(err, res){
+                        if (err) throw err
+                        customer.menu();
+                    }
+                )
+            }
+        )
+
     }
 }
 
