@@ -123,8 +123,7 @@ const manager = {
                         }],
                         function(err, res){
                             if (err) throw err
-                            console.log(`Your inventory has been updated.`)
-                            console.log(`\n`)
+                            console.log(`Your inventory has been updated.\n\n`)
                             manager.menu();               
                         }
                     )
@@ -135,18 +134,43 @@ const manager = {
       )
     },
     addNew: () => {
+      inquirer.prompt([
+        {
+          type:"input",
+          message:"What is the product name?",
+          name: "product"
+        },
+        {
+          type:"input",
+          message:"In what department would you like to list this product?",
+          name: "dept"
+        },
+        {
+          type:"input",
+          message:"What is the price per unit?",
+          name: "price"
+        },
+        {
+          type:"input",
+          message:"How many units would you like to add to the inventory?",
+          name: "stock"
+        }
+      ]).then(answers => {
         connection.query(
-            "INSERT price FROM products WHERE ?",
+            "INSERT INTO products SET ?",
             [{
-                item_id: id
+                product_name: answers.product,
+                department_name: answers.dept,
+                price: answers.price,
+                stock_quantity: answers.stock
             }],
             function(err, res){
                 if (err) throw err
-                let bill = res[0].price * orderQuantity
-                console.log(`Your total is $${bill.toFixed(2)}.`)
-                customer.menu();
+                console.log(`${res.affectedRows} has been added to the product list.\n\n`)
+                manager.menu();
             }
         )
+      })
     }
 }
 
