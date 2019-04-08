@@ -140,7 +140,7 @@ const manager = {
           message:"What is the product name?",
           name: "product"
         },
-        {
+        {/*may want to change this to an list that can expand?*/
           type:"input",
           message:"In what department would you like to list this product?",
           name: "dept"
