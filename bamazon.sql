@@ -26,7 +26,6 @@ VALUES
     ("Cottonelle Ultra ComfortCare Toilet Paper","Home", 12.97, 900),
     ("Digital Bathroom Scale","Home", 23.99, 481)
 
-
 CREATE TABLE departments (
   department_id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
   department_name VARCHAR(100) NOT NULL,
@@ -35,14 +34,15 @@ CREATE TABLE departments (
 
 INSERT INTO departments (department_name, over_head_costs)
 VALUES
-  ("Electronics & Accessories", 10000),
-  ("Grocery & Gourmet Food", 9000),
-  ("Home", 20000)
+  ("Electronics & Accessories", 1000),
+  ("Grocery & Gourmet Food", 900),
+  ("Home", 2000);
 
 
 ALTER TABLE products
 ADD product_sales DECIMAL(30,2) DEFAULT 0.00
 
+/*
 -- this totals allt he product sales by department and gives an allias on the fly
 SELECT department_name, SUM(product_sales) `total sales`
 FROM products
@@ -57,7 +57,4 @@ GROUP BY department_name
 )AS new
 RIGHT JOIN departments
 ON new.department_name = departments.department_name
-
-
--- testing count
-SELECT * FROM products WHERE stock_quantity < 5
+*/

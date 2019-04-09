@@ -1,5 +1,7 @@
 # MySQL-Amazon
-Amazon like store front via MySQL in terminal
+Cli based Amazon-like store front.
+
+## T
 
 
 # Node.js & MySQL
