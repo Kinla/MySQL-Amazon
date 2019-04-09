@@ -7,7 +7,7 @@ const customer = {
         inquirer.prompt([
             {
                 type: "list",
-                message: "What would you like to?",
+                message: "What would you like to do?",
                 choices: ["SHOP", "EXIT"],
                 name: "choice"
             }
@@ -137,5 +137,6 @@ const customer = {
     }
 }
 
-customer.menu();
+//customer.menu();
 
+module.exports = customer

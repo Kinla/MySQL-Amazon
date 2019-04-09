@@ -7,7 +7,7 @@ const supervisor = {
         inquirer.prompt([
             {
                 type: "list",
-                message: "What would you like to?",
+                message: "What would you like to do?",
                 choices: ["View Product Sales by Department", "Create New Department", "EXIT"],
                 name: "choice"
             }
@@ -75,4 +75,6 @@ const supervisor = {
     },
 }
 
-supervisor.menu();
+//supervisor.menu();
+
+module.exports = supervisor
