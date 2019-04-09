@@ -21,6 +21,7 @@
 */
 const connection = require("./connection.js")
 const inquirer = require("inquirer")
+const {table} = require('table')
 
 const manager = {
     menu: () => {
@@ -58,11 +59,12 @@ const manager = {
             "SELECT * FROM products",
             function(err, res){
                 if (err) throw err
-                console.log(`|--ID--|---------------Product---------------|-----------Department-----------|--Price--|--Stock--|`)
-                res.forEach(el => {
-                    console.log(`| ${el.item_id} |  ${el.product_name}  |  ${el.department_name}  |  $${el.price.toFixed(2)}  |  ${el.stock_quantity}  |`)
-                });
-                console.log(`\n`)
+                let data, output;
+                let headers = res.map(el => Object.keys(el))[0]
+                data = res.map(el => Object.keys(el).map(key => el[key]))
+                data.unshift(headers)
+                output = table(data)
+                console.log(output)
                 manager.menu();
             }
         )

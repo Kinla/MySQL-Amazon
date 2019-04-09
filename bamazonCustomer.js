@@ -19,6 +19,7 @@
 //const view = require("./view.js")
 const connection = require("./connection.js")
 const inquirer = require("inquirer")
+const {table} = require('table')
 
 const customer = {
     menu: () => {
@@ -46,14 +47,15 @@ const customer = {
     },
     windowShop: () => {
         connection.query(
-            "SELECT * FROM products",
+            "SELECT item_id, product_name, price FROM products",
             function(err, res){
                 if (err) throw err
-                console.log(`|--ID--|---------------Product---------------|--Price--|`)
-                res.forEach(el => {
-                    console.log(`| ${el.item_id} |  ${el.product_name}  |  $${el.price.toFixed(2)}  |`)
-                });
-                console.log(`|------------------------------------------------------|\n`)
+                let data, output;
+                let headers = res.map(el => Object.keys(el))[0]
+                data = res.map(el => Object.keys(el).map(key => el[key]))
+                data.unshift(headers)
+                output = table(data)
+                console.log(output)
                 customer.order();
             }
         )
