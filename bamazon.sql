@@ -57,3 +57,7 @@ GROUP BY department_name
 )AS new
 RIGHT JOIN departments
 ON new.department_name = departments.department_name
+
+
+-- testing count
+SELECT * FROM products WHERE stock_quantity < 5

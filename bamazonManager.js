@@ -1,24 +1,3 @@
-/*
-* Create a new Node application called `bamazonManager.js`. Running this application will:
-
-  * List a set of menu options:
-
-    * View Products for Sale
-    
-    * View Low Inventory
-    
-    * Add to Inventory
-    
-    * Add New Product
-
-  * If a manager selects `View Products for Sale`, the app should list every available item: the item IDs, names, prices, and quantities.
-
-  * If a manager selects `View Low Inventory`, then it should list all items with an inventory count lower than five.
-
-  * If a manager selects `Add to Inventory`, your app should display a prompt that will let the manager "add more" of any item currently in the store.
-
-  * If a manager selects `Add New Product`, it should allow the manager to add a completely new product to the store.
-*/
 const connection = require("./connection.js")
 const inquirer = require("inquirer")
 const {table} = require('table')
@@ -71,16 +50,15 @@ const manager = {
     },
     lowStock: () => {
       connection.query(
-        "SELECT * FROM products",
+        "SELECT * FROM products WHERE stock_quantity < 5",
         function(err, res){
           if (err) throw err
-          console.log(`|--ID--|---------------Product---------------|-----------Department-----------|--Price--|--Stock--|`)
-          res.forEach(el => {
-            if(el.stock_quantity < 5){
-              console.log(`| ${el.item_id} |  ${el.product_name}  |  ${el.department_name}  |  $${el.price.toFixed(2)}  |  ${el.stock_quantity}  |`)
-            }
-          });
-          console.log(`\n`)
+          let data, output;
+          let headers = res.map(el => Object.keys(el))[0]
+          data = res.map(el => Object.keys(el).map(key => el[key]))
+          data.unshift(headers)
+          output = table(data)
+          console.log(output)
           manager.menu();
         }
       )
@@ -136,43 +114,51 @@ const manager = {
       )
     },
     addNew: () => {
-      inquirer.prompt([
-        {
-          type:"input",
-          message:"What is the product name?",
-          name: "product"
-        },
-        {/*may want to change this to an list of departments in the departments table*/
-          type:"input",
-          message:"In what department would you like to list this product?",
-          name: "dept"
-        },
-        {
-          type:"input",
-          message:"What is the price per unit?",
-          name: "price"
-        },
-        {
-          type:"input",
-          message:"How many units would you like to add to the inventory?",
-          name: "stock"
-        }
-      ]).then(answers => {
-        connection.query(
-            "INSERT INTO products SET ?",
-            [{
-                product_name: answers.product,
-                department_name: answers.dept,
-                price: answers.price,
-                stock_quantity: answers.stock
-            }],
-            function(err, res){
-                if (err) throw err
-                console.log(`${res.affectedRows} has been added to the product list.\n\n`)
-                manager.menu();
-            }
-        )
-      })
+      connection.query(
+        "SELECT * FROM departments",
+        function(err, res){
+            if (err) throw err
+            let dept = res.map(el => el.department_name)
+            inquirer.prompt([
+              {
+                type:"input",
+                message:"What is the product name?",
+                name: "product"
+              },
+              {
+                type:"list",
+                message:"In what department would you like to list this product?",
+                choices: dept,
+                name: "dept"
+              },
+              {
+                type:"input",
+                message:"What is the price per unit?",
+                name: "price"
+              },
+              {
+                type:"input",
+                message:"How many units would you like to add to the inventory?",
+                name: "stock"
+              }
+            ]).then(answers => {
+              connection.query(
+                  "INSERT INTO products SET ?",
+                  [{
+                      product_name: answers.product,
+                      department_name: answers.dept,
+                      price: answers.price,
+                      stock_quantity: answers.stock
+                  }],
+                  function(err, res){
+                      if (err) throw err
+                      console.log(`${res.affectedRows} has been added to the product list.\n\n`)
+                      manager.menu();
+                  }
+              )
+            })
+        })
+
     }
 }
 
