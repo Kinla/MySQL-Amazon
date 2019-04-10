@@ -1,6 +1,7 @@
 const connection = require("./connection.js")
 const inquirer = require("inquirer")
 const table = require("./table.js")
+const chalk = require("chalk")
 
 const manager = {
     menu: () => {
@@ -91,9 +92,9 @@ const manager = {
                         {
                             product_name: product
                         }],
-                        function(err, res){
+                        function(err, res, ){
                             if (err) throw err
-                            console.log(`Your inventory has been updated.\n\n`)//should say what needs to be added
+                            console.log(chalk.blue(`\nQuantity of ${product} has been updated to ${updatedUnits}.\n`))//should say what needs to be added
                             manager.menu();               
                         }
                     )
@@ -117,7 +118,7 @@ const manager = {
               },
               {
                 type:"list",
-                message:"In what department would you like to list this product?",
+                message:"Please select from existing departments for listing this product. \nNote: New department need to be created by the supervisor first.",
                 choices: dept,
                 name: "dept"
               },
@@ -130,22 +131,34 @@ const manager = {
                 type:"input",
                 message:"How many units would you like to add to the inventory?",
                 name: "stock"
+              },
+              {
+                type:"confirm",
+                message: "Please confirm the product details.",
+                name: "confirm"
               }
             ]).then(answers => {
-              connection.query(
-                  "INSERT INTO products SET ?",
-                  [{
-                      product_name: answers.product,
-                      department_name: answers.dept,
-                      price: answers.price,
-                      stock_quantity: answers.stock
-                  }],
-                  function(err, res){
-                      if (err) throw err
-                      console.log(`${res.affectedRows} has been added to the product list.\n\n`)
-                      manager.menu();
-                  }
-              )
+              let price = parseFloat(answers.price).toFixed(2)
+              let stock = parseInt(answers.stock)
+              if (answers.confirm && !isNaN(price) && !isNaN(stock)){
+                connection.query(
+                    "INSERT INTO products SET ?",
+                    [{
+                        product_name: answers.product,
+                        department_name: answers.dept,
+                        price: answers.price,
+                        stock_quantity: answers.stock
+                    }],
+                    function(err, res){
+                        if (err) throw err
+                        console.log(chalk.blue(`\n${answers.product} has been added to the product list.\n`))
+                        manager.menu();
+                    }
+                )
+              } else {
+                console.log(chalk.red('\nInvalid entry. Please double check the values and try again.\n'))
+                manager.addNew()
+              }
             })
         })
 
