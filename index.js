@@ -51,3 +51,5 @@ let index = {
 }
 
 index.start();
+
+module.exports = index

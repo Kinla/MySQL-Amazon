@@ -1,6 +1,6 @@
 const connection = require("./connection.js")
 const inquirer = require("inquirer")
-const {table} = require('table')
+const table = require("./table.js")
 
 const customer = {
     menu: () => {
@@ -31,12 +31,7 @@ const customer = {
             "SELECT item_id, product_name, price FROM products",
             function(err, res){
                 if (err) throw err
-                let data, output;
-                let headers = res.map(el => Object.keys(el))[0]
-                data = res.map(el => Object.keys(el).map(key => el[key]))
-                data.unshift(headers)
-                output = table(data)
-                console.log(output)
+                table(res);
                 customer.order();
             }
         )
@@ -52,11 +47,11 @@ const customer = {
                 type: "input",
                 message: "How many units would you like to purchase?",
                 name: "quantity"
-            }
+            }//add a confirm to this
         ]).then(answers => {
             let id = answers.id
             let orderQuantity = answers.quantity
-            customer.checkStock(id, orderQuantity);
+            customer.checkStock(id, orderQuantity);// need to verify if product id exists before checking stock
         })
     },
     checkStock: (id, orderQuantity) => {

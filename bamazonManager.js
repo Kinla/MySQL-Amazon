@@ -1,6 +1,6 @@
 const connection = require("./connection.js")
 const inquirer = require("inquirer")
-const {table} = require('table')
+const table = require("./table.js")
 
 const manager = {
     menu: () => {
@@ -38,12 +38,7 @@ const manager = {
             "SELECT * FROM products",
             function(err, res){
                 if (err) throw err
-                let data, output;
-                let headers = res.map(el => Object.keys(el))[0]
-                data = res.map(el => Object.keys(el).map(key => el[key]))
-                data.unshift(headers)
-                output = table(data)
-                console.log(output)
+                table(res);
                 manager.menu();
             }
         )
@@ -52,13 +47,8 @@ const manager = {
       connection.query(
         "SELECT * FROM products WHERE stock_quantity < 5",
         function(err, res){
-          if (err) throw err
-          let data, output;
-          let headers = res.map(el => Object.keys(el))[0]
-          data = res.map(el => Object.keys(el).map(key => el[key]))
-          data.unshift(headers)
-          output = table(data)
-          console.log(output)
+          if (err) throw err // do an if statment if no product stock is under 5. by using if (res.length)
+          table(res);
           manager.menu();
         }
       )
@@ -103,7 +93,7 @@ const manager = {
                         }],
                         function(err, res){
                             if (err) throw err
-                            console.log(`Your inventory has been updated.\n\n`)
+                            console.log(`Your inventory has been updated.\n\n`)//should say what needs to be added
                             manager.menu();               
                         }
                     )

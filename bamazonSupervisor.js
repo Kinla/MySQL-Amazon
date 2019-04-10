@@ -1,6 +1,6 @@
 const connection = require("./connection.js")
 const inquirer = require("inquirer")
-const {table} = require('table')
+const table = require("./table.js")
 
 const supervisor = {
     menu: () => {
@@ -34,12 +34,7 @@ const supervisor = {
             "SELECT department_id, new.department_name, over_head_costs, product_sales, product_sales-over_head_costs AS total_profit FROM\x28 SELECT department_name, SUM\x28product_sales\x29 product_sales FROM products GROUP BY department_name \x29 AS new RIGHT JOIN departments ON new.department_name = departments.department_name",
             function(err, res){
                 if (err) throw err
-                let data, output;
-                let headers = res.map(el => Object.keys(el))[0]
-                data = res.map(el => Object.keys(el).map(key => el[key]))
-                data.unshift(headers)
-                output = table(data)
-                console.log(output)
+                table(res);
                 supervisor.menu();
             }
         )

@@ -2,7 +2,7 @@
   "name": "mysql-amazon",
   "version": "1.0.0",
   "description": "Cli app that is an Amazon-esk store front based on MySQL and Inquirer.",
-  "main": "bamazonCustomer.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
