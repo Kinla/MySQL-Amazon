@@ -12,7 +12,7 @@ CREATE TABLE products (
   stock_quantity INT
 );
 
-INSERT INTO products (product_name, department_name, price, stock_quantity, )
+INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES
     ("SanDisk Ultra 128GB microSD", "Electronics & Accessories", 19.00, 8),
     ("Anker SoundBuds Slim Bluetooth Earbuds", "Electronics & Accessories", 32.99, 50),
@@ -24,7 +24,7 @@ VALUES
     ("Instant Pot Ultra 10-in-1","Home", 149.99, 71),
     ("black+Decker Toaster Oven","Home", 34.96, 64),
     ("Cottonelle Ultra ComfortCare Toilet Paper","Home", 12.97, 900),
-    ("Digital Bathroom Scale","Home", 23.99, 481)
+    ("Digital Bathroom Scale","Home", 23.99, 481);
 
 CREATE TABLE departments (
   department_id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -40,7 +40,7 @@ VALUES
 
 
 ALTER TABLE products
-ADD product_sales DECIMAL(30,2) DEFAULT 0.00
+ADD product_sales DECIMAL(30,2) DEFAULT 0.00;
 
 /*
 -- this totals allt he product sales by department and gives an allias on the fly
