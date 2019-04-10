@@ -8,6 +8,9 @@ This is a Cli based Amazon-like store front creating using MySQL database. The a
   * npm - mysql
   * npm - table
   * npm - figlet
+  * npm - chalk
+
+## Installation
 
 ### Customer View
 
