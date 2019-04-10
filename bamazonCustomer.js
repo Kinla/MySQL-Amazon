@@ -47,11 +47,18 @@ const customer = {
                 type: "input",
                 message: "How many units would you like to purchase?",
                 name: "quantity"
-            }//add a confirm to this
+            },
+            {
+                type:"confirm",
+                message: "Is the above order correct?",
+                name: "confirm"
+            }
         ]).then(answers => {
-            let id = answers.id
-            let orderQuantity = answers.quantity
-            customer.checkStock(id, orderQuantity);// need to verify if product id exists before checking stock
+            if (answers.confirm){
+                let id = answers.id
+                let orderQuantity = answers.quantity
+                customer.checkStock(id, orderQuantity);// need to verify if product id exists before checking stock
+            } else {customer.order()}
         })
     },
     checkStock: (id, orderQuantity) => {
