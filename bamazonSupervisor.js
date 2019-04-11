@@ -1,6 +1,8 @@
 const connection = require("./connection.js")
 const inquirer = require("inquirer")
 const table = require("./table.js")
+const chalk = require("chalk")
+
 
 const supervisor = {
     menu: () => {
@@ -48,24 +50,34 @@ const supervisor = {
             },
             {
                 type: "input",
-                message: "Whta is the over head cost of running this department?",
+                message: "What is the over head cost of running this department?",
                 name: "cost"
+            },
+            {
+                type: "confirm",
+                message: "IS the above information correct?",
+                name: "confirm"
             }
         ]).then(answers => {
             let name = answers.name
-            let cost = answers.cost
-            connection.query(
-                "INSERT INTO departments SET ?",
-                [{
-                    department_name: name,
-                    over_head_costs: cost
-                }],
-                function(err, res){
-                    if (err) throw err
-                    console.log(`${res.affectedRows} has been added to the store.`)
-                    supervisor.menu();
-                }
-            )
+            let cost = parseInt(answers.cost)
+            if (answers.confirm && !isNaN(cost)){
+                connection.query(
+                    "INSERT INTO departments SET ?",
+                    [{
+                        department_name: name,
+                        over_head_costs: cost
+                    }],
+                    function(err, res){
+                        if (err) throw err
+                        console.log(chalk.green(`\nThe ${name} department has been added to the store.\n`))
+                        supervisor.menu();
+                    }
+                )
+            } else {
+                console.log(chalk.red(`\nPlease resubmit your request.\n`))
+                supervisor.createDept();
+            }
         })
     },
 }

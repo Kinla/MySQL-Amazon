@@ -101,7 +101,7 @@ const manager = {
                           }],
                           function(err, res){
                               if (err) throw err
-                              console.log(chalk.blue(`\n${unitsAdded} units has been added to ${product}. The total stock count is ${updatedUnits}.\n`))//should say what needs to be added
+                              console.log(chalk.green(`\n${unitsAdded} units has been added to ${product}. The total stock count is ${updatedUnits}.\n`))//should say what needs to be added
                               manager.menu();               
                           }
                       )} else {
@@ -162,7 +162,7 @@ const manager = {
                     }],
                     function(err, res){
                         if (err) throw err
-                        console.log(chalk.blue(`\n${answers.product} has been added to the product list.\n`))
+                        console.log(chalk.green(`\n${answers.product} has been added to the product list.\n`))
                         manager.menu();
                     }
                 )
