@@ -71,10 +71,16 @@ const manager = {
                 type: "input",
                 message: "How many units would you like to restock?",
                 name: "units"
+              },
+              {
+                type: "confirm",
+                message: "Is the above information correct?",
+                name: "confirm"
               }
             ]).then( answers => {
                 let product = answers.product
-                let unitsAdded = answers.units
+                let unitsAdded = parseInt(answers.units)
+
                 connection.query(
                   "SELECT stock_quantity FROM products WHERE ?",
                   {
@@ -83,21 +89,26 @@ const manager = {
                   function(err, res){
                       if (err) throw err
                       let stock = res[0].stock_quantity
-                      let updatedUnits = parseInt(unitsAdded) + parseInt(stock)
-                      connection.query(
-                        "UPDATE products SET ? WHERE ?",
-                        [{
-                            stock_quantity: updatedUnits,
-                        },
-                        {
-                            product_name: product
-                        }],
-                        function(err, res, ){
-                            if (err) throw err
-                            console.log(chalk.blue(`\nQuantity of ${product} has been updated to ${updatedUnits}.\n`))//should say what needs to be added
-                            manager.menu();               
-                        }
-                    )
+                      let updatedUnits = unitsAdded + parseInt(stock)
+                      if (answers.confirm && !isNaN(unitsAdded)){
+                        connection.query(
+                          "UPDATE products SET ? WHERE ?",
+                          [{
+                              stock_quantity: updatedUnits,
+                          },
+                          {
+                              product_name: product
+                          }],
+                          function(err, res){
+                              if (err) throw err
+                              console.log(chalk.blue(`\n${unitsAdded} units has been added to ${product}. The total stock count is ${updatedUnits}.\n`))//should say what needs to be added
+                              manager.menu();               
+                          }
+                      )} else {
+                        console.log(chalk.red('\nSomething is not quite right. Please resubmit your request.\n'))
+                        manager.restock()
+                      }
+
                   }
                 )
             })
@@ -156,7 +167,7 @@ const manager = {
                     }
                 )
               } else {
-                console.log(chalk.red('\nInvalid entry. Please double check the values and try again.\n'))
+                console.log(chalk.red('\nPlease check the values and resubmit your request.\n'))
                 manager.addNew()
               }
             })
