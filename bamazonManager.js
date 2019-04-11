@@ -48,9 +48,14 @@ const manager = {
       connection.query(
         "SELECT * FROM products WHERE stock_quantity < 5",
         function(err, res){
-          if (err) throw err // do an if statment if no product stock is under 5. by using if (res.length)
-          table(res);
-          manager.menu();
+          if (res.length){
+            if (err) throw err
+            table(res);
+            manager.menu();
+          } else {
+            console.log(chalk.green(`\nAll products meet the minimal stock requirement of 5 units.\n`))
+            manager.menu();
+          }
         }
       )
     },

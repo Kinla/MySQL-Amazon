@@ -4,21 +4,33 @@ This is a Cli based Amazon-like store front creating using MySQL database. The a
 ## Technologies
   * JavaScript
   * Node.js
+  * MySQL
   * npm - inquirer
   * npm - mysql
   * npm - table
   * npm - figlet
   * npm - chalk
 
-## Installation
+## Installation & Set Up
+  1. Clone this repository.
+  2. Run `npm install`.
+  3. Start up MySQL connection
+  4. Update `user` and `password` from the default of `root` in `connection.js` if necessary.
+  5. Run MySQL code in `bamazon.sql` to set up the database and tables for this program.
+  6. Nagigate to the folder in which `index.js` is saved to start the program through node with this command: `node index.js`.
 
+## Usage Example
 ### Customer View
+![](http://i.imgur.com/OUkLi.gif)
 
 ### Manager View
+![](http://i.imgur.com/OUkLi.gif)
 
 ### Supervisor View
-
-- - -
+![](http://i.imgur.com/OUkLi.gif)
 
 ## Bugs / Improvements
-  * split into controller model view
+  * Revisit validation of user input
+
+## License
+MIT  

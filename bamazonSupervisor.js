@@ -33,7 +33,7 @@ const supervisor = {
     },
     viewSales: () => {
         connection.query(
-            "SELECT department_id, new.department_name, over_head_costs, product_sales, product_sales-over_head_costs AS total_profit FROM\x28 SELECT department_name, SUM\x28product_sales\x29 product_sales FROM products GROUP BY department_name \x29 AS new RIGHT JOIN departments ON new.department_name = departments.department_name",
+            "SELECT department_id, departments.department_name, over_head_costs, product_sales, product_sales-over_head_costs AS total_profit FROM\x28 SELECT department_name, SUM\x28product_sales\x29 product_sales FROM products GROUP BY department_name \x29 AS new RIGHT JOIN departments ON new.department_name = departments.department_name",
             function(err, res){
                 if (err) throw err
                 table(res);
@@ -60,6 +60,7 @@ const supervisor = {
             }
         ]).then(answers => {
             let name = answers.name
+            console.log(name)
             let cost = parseInt(answers.cost)
             if (answers.confirm && !isNaN(cost)){
                 connection.query(
