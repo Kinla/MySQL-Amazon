@@ -21,13 +21,13 @@ This is a Cli based Amazon-like store front creating using MySQL database. The a
 
 ## Usage Example
 ### Customer View
-![](http://i.imgur.com/OUkLi.gif)
+![usage](https://github.com/Kinla/MySQL-Amazon/blob/master/assets/customer.gif)
 
 ### Manager View
-![](http://i.imgur.com/OUkLi.gif)
+![usage](https://github.com/Kinla/MySQL-Amazon/blob/master/assets/manager.gif)
 
 ### Supervisor View
-![](http://i.imgur.com/OUkLi.gif)
+![usage](https://github.com/Kinla/MySQL-Amazon/blob/master/assets/supervisor.gif)
 
 ## Bugs / Improvements
   * Revisit validation of user input
